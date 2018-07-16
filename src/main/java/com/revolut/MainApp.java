@@ -1,5 +1,6 @@
 package com.revolut;
 
+import com.revolut.db.HibernateUtil;
 import org.flywaydb.core.Flyway;
 
 import static spark.Spark.afterAfter;
@@ -11,6 +12,7 @@ public class MainApp {
 
     public static void main(String[] args) {
         initDb();
+        HibernateUtil.getSession();
         afterAfter((req, res) -> res.type("application/json"));
     }
 
