@@ -25,7 +25,7 @@ public class HibernateUtil {
                     new MetadataSources(standardRegistry).getMetadataBuilder().build();
             return metaData.getSessionFactoryBuilder().build();
         } catch (Throwable th) {
-            System.err.println("Enitial SessionFactory creation failed" + th);
+            System.err.println("SessionFactory creation failed" + th);
             throw new ExceptionInInitializerError(th);
         }
     }

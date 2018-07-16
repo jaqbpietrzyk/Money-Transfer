@@ -12,7 +12,6 @@ public class MainApp {
 
     public static void main(String[] args) {
         initDb();
-        HibernateUtil.getSession();
         afterAfter((req, res) -> res.type("application/json"));
     }
 
