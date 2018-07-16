@@ -1,5 +1,7 @@
 package com.revolut;
 
+import com.google.inject.Guice;
+import com.google.inject.Stage;
 import com.revolut.db.HibernateUtil;
 import org.flywaydb.core.Flyway;
 
@@ -12,6 +14,7 @@ public class MainApp {
 
     public static void main(String[] args) {
         initDb();
+        Guice.createInjector(Stage.PRODUCTION, new MainModule());
         afterAfter((req, res) -> res.type("application/json"));
     }
 
