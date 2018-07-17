@@ -20,7 +20,7 @@ public class MainApp {
 
     private static void initDb() {
         Flyway flyway = new Flyway();
-        flyway.setDataSource("jdbc:h2:mem:./target/com/revolut", "sa", null);
+        flyway.setDataSource("jdbc:h2:mem:revolut;DB_CLOSE_DELAY=-1", "sa", null);
         flyway.migrate();
     }
 }

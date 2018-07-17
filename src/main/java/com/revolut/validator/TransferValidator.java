@@ -2,9 +2,13 @@ package com.revolut.validator;
 
 import com.google.common.collect.ImmutableSet;
 import com.revolut.dto.TransferDto;
+import groovy.util.logging.Slf4j;
+import org.apache.commons.validator.routines.CurrencyValidator;
+import org.apache.commons.validator.routines.IBANValidator;
 import org.apache.commons.validator.routines.checkdigit.IBANCheckDigit;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
