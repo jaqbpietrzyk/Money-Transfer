@@ -24,6 +24,4 @@ public class AccountValidator {
         Preconditions.checkState(fromAmount.compareTo(amount) >= 0.00,
                 "Insufficient funds. You need %s %s more", amount.subtract(fromAmount), currency);
     }
-
-
 }
