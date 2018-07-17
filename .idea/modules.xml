@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Money-Transfer.iml" filepath="$PROJECT_DIR$/.idea/modules/Money-Transfer.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Money-Transfer_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Money-Transfer_main.iml" group="Money-Transfer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Money-Transfer_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Money-Transfer_main.iml" group="Money-Transfer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Money-Transfer_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Money-Transfer_test.iml" group="Money-Transfer" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Money-Transfer_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Money-Transfer_test.iml" group="Money-Transfer" />
     </modules>
   </component>
