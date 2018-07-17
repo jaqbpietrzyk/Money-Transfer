@@ -3,6 +3,7 @@ package com.revolut;
 import com.google.inject.AbstractModule;
 import com.revolut.controller.ControllerModule;
 import com.revolut.dao.TransferDaoModule;
+import com.revolut.db.DbModule;
 import com.revolut.service.ServiceModule;
 
 /**
@@ -14,5 +15,6 @@ public class MainModule extends AbstractModule {
         install(new ServiceModule());
         install(new ControllerModule());
         install(new TransferDaoModule());
+        install(new DbModule());
     }
 }

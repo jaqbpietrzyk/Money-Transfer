@@ -2,12 +2,9 @@ package com.revolut.validator;
 
 import com.google.common.collect.ImmutableSet;
 import com.revolut.dto.TransferDto;
-import org.apache.commons.validator.routines.CurrencyValidator;
-import org.apache.commons.validator.routines.IBANValidator;
 import org.apache.commons.validator.routines.checkdigit.IBANCheckDigit;
 
 import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -24,7 +21,7 @@ public interface TransferValidator extends Function<TransferDto, ValidationResul
     }
 
     static TransferValidator isValidCurrency() {
-        return testWithMessage(transferDto -> supportedCurrencies.contains(transferDto.getCurrency().toUpperCase()) , "Non valid currency");
+        return testWithMessage(transferDto -> supportedCurrencies.contains(transferDto.getCurrency().toUpperCase()), "Non valid currency");
     }
 
     static TransferValidator isValidFromIBANNumber() {
@@ -46,7 +43,11 @@ public interface TransferValidator extends Function<TransferDto, ValidationResul
     default TransferValidator and(TransferValidator other) {
         return transferDto -> {
             final ValidationResult result = this.apply(transferDto);
-            return result.isValid() ? other.apply(transferDto) : result;
+            if (result.isValid()) {
+                return other.apply(transferDto);
+            } else {
+                throw new IllegalArgumentException(result.getReason().orElse("Unknown error"));
+            }
         };
     }
 }

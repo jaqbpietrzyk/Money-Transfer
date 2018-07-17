@@ -20,7 +20,7 @@ public class ErrorController {
         initPath();
     }
 
-    public void initPath(){
+    public void initPath() {
         exception(IllegalArgumentException.class, (e, req, res) -> {
             res.status(400);
             res.body(gson.toJson(new ErrorDto(e.getMessage())));

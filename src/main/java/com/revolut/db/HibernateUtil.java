@@ -11,13 +11,13 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
  * Created by kubus on 15/07/2018.
  */
 public class HibernateUtil {
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private final SessionFactory sessionFactory;
 
-    public static SessionFactory getSessionFactory() {
-        return buildSessionFactory();
+    public HibernateUtil() {
+        sessionFactory = initSessionFactory();
     }
 
-    private static SessionFactory buildSessionFactory() {
+    private SessionFactory initSessionFactory() {
         try {
             StandardServiceRegistry standardRegistry =
                     new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
@@ -30,12 +30,8 @@ public class HibernateUtil {
         }
     }
 
-    public static Session getSession() {
-        Session hibernateSession = getSessionFactory().getCurrentSession();
+    public Session getSession() {
+        Session hibernateSession = sessionFactory.getCurrentSession();
         return hibernateSession;
-    }
-
-    public static void shutdown() {
-        getSessionFactory().close();
     }
 }
