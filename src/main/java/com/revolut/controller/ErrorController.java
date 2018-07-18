@@ -22,13 +22,13 @@ public class ErrorController {
 
     public void initPath() {
         exception(Exception.class, (e, req, res) -> {
-            res.status(400);
-            res.body(gson.toJson(new ErrorDto(e.getMessage())));
+            res.status(500);
+            res.body(gson.toJson(new ErrorDto(e.getMessage(), req.attribute("uuid"))));
         });
 
         exception(JsonSyntaxException.class, (e, req, res) -> {
             res.status(400);
-            res.body(gson.toJson(new ErrorDto(e.getMessage())));
+            res.body(gson.toJson(new ErrorDto(e.getMessage(), req.attribute("uuid"))));
         });
     }
 }

@@ -10,5 +10,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ErrorDto {
     private final String message;
+    private final String uuid;
 
 }

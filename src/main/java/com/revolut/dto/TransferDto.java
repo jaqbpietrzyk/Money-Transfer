@@ -1,5 +1,6 @@
 package com.revolut.dto;
 
+import com.revolut.json.JsonRequired;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -9,9 +10,15 @@ import java.math.BigDecimal;
  */
 @Data
 public class TransferDto {
+    @JsonRequired
     private final String from;
+    @JsonRequired
     private final String to;
+    @JsonRequired
     private final BigDecimal amount;
+    @JsonRequired
     private final String currency;
+
+
 }
 

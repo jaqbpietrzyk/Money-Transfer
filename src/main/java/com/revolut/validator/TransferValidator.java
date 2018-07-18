@@ -1,14 +1,11 @@
 package com.revolut.validator;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.revolut.dto.TransferDto;
-import groovy.util.logging.Slf4j;
-import org.apache.commons.validator.routines.CurrencyValidator;
-import org.apache.commons.validator.routines.IBANValidator;
 import org.apache.commons.validator.routines.checkdigit.IBANCheckDigit;
 
 import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -20,16 +17,23 @@ public interface TransferValidator extends Function<TransferDto, ValidationResul
 
     Set<String> supportedCurrencies = ImmutableSet.of("USD", "EUR", "PLN");
 
+    static TransferValidator isValidScale() {
+        return testWithMessage(transferDto -> transferDto.getAmount().scale() < 3, "Please provide amount with at most 2 digits after decimal point");
+    }
+
     static TransferValidator nonNegativeAmount() {
-        return testWithMessage(transferDto -> transferDto.getAmount().compareTo(BigDecimal.ZERO) > 0, "Amount has to be greater than zero");
+        return testWithMessage(transferDto -> transferDto.getAmount() != null && transferDto.getAmount().compareTo(BigDecimal.ZERO) > 0,
+                "Non valid amount. Please provide amount field greater than zero");
     }
 
     static TransferValidator isValidCurrency() {
-        return testWithMessage(transferDto -> supportedCurrencies.contains(transferDto.getCurrency().toUpperCase()), "Non valid currency");
+        return testWithMessage(
+                transferDto -> !Strings.isNullOrEmpty(transferDto.getCurrency()) && supportedCurrencies.contains(transferDto.getCurrency().toUpperCase()),
+                "Non valid currency");
     }
 
     static TransferValidator isValidFromIBANNumber() {
-        return testWithMessage(transferDto -> IBANCheckDigit.IBAN_CHECK_DIGIT.isValid(transferDto.getFrom()), String.format("Invalid From account"));
+        return testWithMessage(transferDto -> IBANCheckDigit.IBAN_CHECK_DIGIT.isValid(transferDto.getFrom()), "Invalid From account");
     }
 
     static TransferValidator isValidToIBANNumber() {
@@ -47,11 +51,7 @@ public interface TransferValidator extends Function<TransferDto, ValidationResul
     default TransferValidator and(TransferValidator other) {
         return transferDto -> {
             final ValidationResult result = this.apply(transferDto);
-            if (result.isValid()) {
-                return other.apply(transferDto);
-            } else {
-                throw new IllegalArgumentException(result.getReason().orElse("Unknown error"));
-            }
+            return result.isValid() ? other.apply(transferDto) : result;
         };
     }
 }
