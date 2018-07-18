@@ -3,7 +3,7 @@
 Just type 
 
 ```
-./gradlew run
+./gradlew test run
 ```
 
 By default application will listen on 4567 http port.
